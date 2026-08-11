@@ -28,9 +28,9 @@ This README covers everything needed to **run** "build\_course.py".
 
 |Tool|Used for|Install (Windows)|Override flag|
 |-|-|-|-|
-|**LibreOffice**|render the .pptx to PDF|download from libreoffice.org<br />or<br />winget install TheDocumentFoundation.LibreOffice|`--soffice "C:\\\\\\\\\\\\\\\\Program Files\\\\\\\\\\\\\\\\LibreOffice\\\\\\\\\\\\\\\\program\\\\\\\\\\\\\\\\soffice.com"`|
-|**Poppler** (`pdftoppm`, `pdfinfo`)|PDF → slide images|`choco install poppler` (also found in a Calibre install)|`--poppler-bin "C:\\\\\\\\\\\\\\\\Program Files\\\\\\\\\\\\\\\\Calibre2\\\\\\\\\\\\\\\\app\\\\\\\\\\\\\\\\bin"`|
-|**ffmpeg** (`ffmpeg`, `ffprobe`)|build/concatenate video + audio|download from ffmpeg.org (e.g. `C:\\\\\\\\\\\\\\\\ffmpeg\\\\\\\\\\\\\\\\bin`)<br />or<br />winget install Gyan.FFmpeg|`--ffmpeg-bin "C:\\\\\\\\\\\\\\\\ffmpeg\\\\\\\\\\\\\\\\bin"`|
+|**LibreOffice**|render the .pptx to PDF|download from libreoffice.org<br />or<br />winget install TheDocumentFoundation.LibreOffice|`--soffice "C:\Program Files\LibreOffice\program\soffice.com"`|
+|**Poppler** (`pdftoppm`, `pdfinfo`)|PDF → slide images|`choco install poppler` (also found in a Calibre install)|`--poppler-bin "C:\Program Files\Calibre2\app\bin"`|
+|**ffmpeg** (`ffmpeg`, `ffprobe`)|build/concatenate video + audio|download from ffmpeg.org (e.g. `C:\ffmpeg\bin`)<br />or<br />winget install Gyan.FFmpeg|`--ffmpeg-bin "C:\ffmpeg\bin"`|
 
 The script auto‑discovers these on `PATH` and in common locations; use the override flags if it can’t find them.
 
@@ -59,7 +59,7 @@ pip install python-pptx python-docx
 |`edge` *(default)*|pip install edge-tts|Free, natural, **online** (no key).|
 |`kokoro`|pip install kokoro soundfile|Local, CPU. Also needs **espeak‑ng** installed, and **Python ≤ 3.12**.|
 |`piper`|pip install piper-tts|Local, tiny, offline.|
-|`elevenlabs`|pip install requests|Also set env vars `ELEVENLABS\\\\\\\\\\\\\\\_API\\\\\\\\\\\\\\\_KEY` and `ELEVENLABS\\\\\\\\\\\\\\\_VOICE\\\\\\\\\\\\\\\_ID`.|
+|`elevenlabs`|pip install requests|Also set env vars `ELEVENLABS\_API\_KEY` and `ELEVENLABS\_VOICE\_ID`.|
 |`voicecast`|*(nothing here)*|Uses the external voice‑cast install — see **§4**.|
 
 Quick start for the default engine:
@@ -94,14 +94,14 @@ The `voicecast` engine narrates in a **cloned voice** using the external
 git clone https://github.com/luongnv89/voice-cast.git
 cd voice-cast
 py -3.11 -m venv .venv           :: any Python 3.10–3.12
-.venv\\Scripts\\activate
+.venv\Scripts\activate
 pip install -e ".\[chatterbox]"   :: \[chatterbox] is needed for the chatterbox engines
 
 
 
 Notes:
 
-* The default `--voicecast-engine` is **`chatterbox-turbo`**, so install the **`\\\\\\\\\\\\\\\[chatterbox]`** extra as shown. (Use plain `pip install -e .` only if you will use the `coqui` engine.)
+* The default `--voicecast-engine` is **`chatterbox-turbo`**, so install the **`\chatterbox]`** extra as shown. (Use plain `pip install -e .` only if you will use the `coqui` engine.)
 * If the helper later reports that `soundfile` is missing, install it **into voice‑cast’s venv**: `pip install soundfile`.
 * On first run the model (\~2 GB) downloads from Hugging Face and is then cached locally; later runs are offline.
 
@@ -129,19 +129,19 @@ python build\_course.py ^
 --pptx my\_deck.pptx ^
 --script my\_narration.docx ^
 --engine voicecast ^
---voice-sample "C:\\path\\to\\my-voice.wav" ^
---voicecast-dir "C:\\path\\to\\voice-cast" ^
---soffice "C:\\Program Files\\LibreOffice\\program\\soffice.com" ^
---poppler-bin "C:\\Program Files\\Calibre2\\app\\bin" ^
---ffmpeg-bin "C:\\ffmpeg\\bin"
+--voice-sample "C:\path\to\my-voice.wav" ^
+--voicecast-dir "C:\path\to\voice-cast" ^
+--soffice "C:\Program Files\LibreOffice\program\soffice.com" ^
+--poppler-bin "C:\Program Files\Calibre2\app\bin" ^
+--ffmpeg-bin "C:\ffmpeg\bin"
 
 
 
-The script auto‑detects voice‑cast’s venv at `<voicecast-dir>\\\\\\\\\\\\\\\\.venv`. If it’s elsewhere, add:
+The script auto‑detects voice‑cast’s venv at `<voicecast-dir>\.venv`. If it’s elsewhere, add:
 
 
 
-\--voicecast-python "C:\\path\\to\\voice-cast\\.venv\\Scripts\\python.exe"
+\--voicecast-python "C:\path\to\voice-cast\.venv\Scripts\python.exe"
 
 
 
@@ -150,10 +150,10 @@ The script auto‑detects voice‑cast’s venv at `<voicecast-dir>\\\\\\\\\\\\\
 |Flag|Default|Meaning|
 |-|-|-|
 |`--voice-sample`|*(required)*|WAV/MP3 of the voice to clone|
-|`--voicecast-dir`|`E:\\\\\\\\\\\\\\\\…\\\\\\\\\\\\\\\\voice-cast`|path to the cloned voice‑cast repo|
+|`--voicecast-dir`|`E:\…\voice-cast`|path to the cloned voice‑cast repo|
 |`--voicecast-engine`|`chatterbox-turbo`|`coqui` \| `chatterbox` \| `chatterbox-turbo`|
 |`--voicecast-lang`|`en`|language code|
-|`--voicecast-python`|*(auto)*|voice‑cast venv Python, if not at `<dir>\\\\\\\\\\\\\\\\.venv`|
+|`--voicecast-python`|*(auto)*|voice‑cast venv Python, if not at `<dir>\.venv`|
 |`--voicecast-max-chars`|`220`|max characters per synthesis chunk (see below)|
 |`--voicecast-gap`|`0.15`|seconds of silence between chunks|
 |`--voicecast-no-batch`|off|disable the one‑load batch pass (not recommended)|
@@ -187,7 +187,7 @@ With no narration document, each slide is narrated from its on‑slide text; wit
 
 ### Split into sections (choose one)
 
-* `--modules-json ranges.json` — explicit slide ranges: `\\\\\\\\\\\\\\\[{"name":"Intro","slug":"intro","start":1,"end":10}, ...]`
+* `--modules-json ranges.json` — explicit slide ranges: `\[{"name":"Intro","slug":"intro","start":1,"end":10}, ...]`
 * `--divider-mark "text on every divider slide"` — auto‑detect sections from divider slides.
 
 ### 
@@ -223,11 +223,11 @@ python build\_course.py --pptx my\_deck.pptx --script my\_narration.docx --dry-r
 
 :: Using voicecast with the provided example files (note tat the execution take some time: several hours)
 
-py -3.13 .\\src\\build\_course.py --pptx .\\Example\\ACAS\_course\_slides\_v4.pptx --script .\\Example\\ACAS\_course\_script\_v4.docx --modules-json .\\Example\\acas\_modules.json --org "CyberSuite Academy by Montimage" --engine voicecast  --voicecast-engine chatterbox-turbo --voice-sample ".\\Example\\my-voice.wav" --soffice "C:\\Program Files\\LibreOffice\\program\\soffice.com" --poppler-bin "C:\\Program Files\\Calibre2\\app\\bin"
+py -3.13 .\src\build\_course.py --pptx .\Example\ACAS\_course\_slides\_v4.pptx --script .\Example\ACAS\_course\_script\_v4.docx --modules-json .\\Example\acas\_modules.json --org "CyberSuite Academy by Montimage" --engine voicecast  --voicecast-engine chatterbox-turbo --voice-sample ".\\Example\my-voice.wav" --soffice "C:\Program Files\LibreOffice\program\soffice.com" --poppler-bin "C:\Program Files\Calibre2\app\bin"
 
 
 
-:: Results will be found in .\\build\\videos
+:: Results will be found in .\build\videos
 
 
 
@@ -255,9 +255,9 @@ Run "python build\_course.py -h" for the full list.
 
 ## 6\. Troubleshooting
 
-* **`Warning: You are sending unauthenticated requests to the HF Hub … set a HF\\\\\\\\\\\\\\\_TOKEN`** — harmless. It appears while a model downloads (Whisper, or voice‑cast). Downloads work without a token; it stops once the model is cached. Only set `HF\\\\\\\\\\\\\\\_TOKEN` if you actually hit an HTTP 429 rate‑limit.
+* **`Warning: You are sending unauthenticated requests to the HF Hub … set a HF\_TOKEN`** — harmless. It appears while a model downloads (Whisper, or voice‑cast). Downloads work without a token; it stops once the model is cached. Only set `HF\_TOKEN` if you actually hit an HTTP 429 rate‑limit.
 * **`soffice` / `pdftoppm` / `ffmpeg` not found** — install the tool (§2) and open a **new** terminal, or pass `--soffice` / `--poppler-bin` / `--ffmpeg-bin`.
-* **voicecast: `ChatterboxEngine.\\\\\\\\\\\\\\\_\\\\\\\\\\\\\\\_init\\\\\\\\\\\\\\\_\\\\\\\\\\\\\\\_() got an unexpected keyword argument 'auto\\\\\\\\\\\\\\\_download'`** — you’re running an old "voicecast\_synth.py". Use the current one (it never passes `auto\\\\\\\\\\\\\\\_download`); confirm by searching the file — the correct version contains the text `auto\\\\\\\\\\\\\\\_download` **zero** times.
+* **voicecast: `ChatterboxEngine.\_\_init\_\_() got an unexpected keyword argument 'auto\_download'`** — you’re running an old "voicecast\_synth.py". Use the current one (it never passes `auto\_download`); confirm by searching the file — the correct version contains the text `auto\_download` **zero** times.
 * **kokoro install/run fails on Python 3.13** — Kokoro needs Python ≤ 3.12; use `edge` (works on 3.13) or make a 3.12 environment for kokoro.
 * **voice cloning truncates or repeats** — make sure the batch pass is on (don’t use `--voicecast-no-batch`) and lower `--voicecast-max-chars` (e.g. 160).
 
