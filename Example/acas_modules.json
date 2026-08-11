@@ -1,0 +1,10 @@
+[
+  { "name": "Course Introduction", "slug": "00-intro",    "start":  1, "end": 10 },
+  { "name": "Module 1",            "slug": "01-module1",  "start": 11, "end": 19 },
+  { "name": "Module 2",            "slug": "02-module2",  "start": 20, "end": 29 },
+  { "name": "Module 3",            "slug": "03-module3",  "start": 30, "end": 38 },
+  { "name": "Module 4",            "slug": "04-module4",  "start": 39, "end": 48 },
+  { "name": "Module 5",            "slug": "05-module5",  "start": 49, "end": 56 },
+  { "name": "Capstone",            "slug": "06-capstone", "start": 57, "end": 60 },
+  { "name": "Wrap-Up",             "slug": "07-wrapup",   "start": 61, "end": 64 }
+]
